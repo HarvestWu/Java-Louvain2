@@ -3,11 +3,7 @@
  * @Date: 2019-10-18 19:13
  **/
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -106,6 +102,7 @@ public class ModularityOptimizer {
 
 
         writeOutputFile(outputFileName, cluster);
+        writeOutputJson(inputFileName,cluster);
     }
 
     private static Network readInputFile(String fileName, int modularityFunction) throws IOException {
@@ -199,5 +196,52 @@ public class ModularityOptimizer {
         }
 
         bufferedWriter.close();
+    }
+
+    public static void writeOutputJson(String fileName, int[] cluster) throws IOException {
+        BufferedWriter bufferedWriter;
+        bufferedWriter = new BufferedWriter(new FileWriter("D:/nodes.json"));
+        bufferedWriter.write("[\n");
+        for(int i=0;i<cluster.length;i++){
+            bufferedWriter.write("{\"id\": \""+i+"\", \"group\": "+cluster[i]+"}");
+            if(i+1!=cluster.length)
+                bufferedWriter.write(",");
+            bufferedWriter.write("\n");
+        }
+        bufferedWriter.write("]");
+        bufferedWriter.close();
+
+        BufferedWriter bufferedWriter1;
+        bufferedWriter1 = new BufferedWriter(new FileWriter("D:/links.json"));
+        bufferedWriter1.write("[\n");
+        try {
+            String encoding = "UTF-8";
+            File file = new File(fileName);
+            if (file.isFile() && file.exists()) {
+                InputStreamReader read = new InputStreamReader(new FileInputStream(file), encoding);// 考虑到编码格式
+                BufferedReader bufferedReader = new BufferedReader(read);
+                String lineTxt = null;
+                lineTxt = bufferedReader.readLine();
+                int total=Integer.parseInt(lineTxt.split(" ")[1]);
+                while ((lineTxt = bufferedReader.readLine()) != null) {
+                    String[] cur = lineTxt.split(" ");
+                    int i = Integer.parseInt(cur[0]);
+                    int j = Integer.parseInt(cur[1]);
+                    total--;
+                    bufferedWriter1.write("{\"source\": \"" + i + "\", \"target\": \"" + j + "\", \"value\": 1}");
+//                    bufferedWriter.write(",");
+//                    bufferedWriter.write("\n");
+//                    bufferedWriter.write("{\"source\": \"" + j + "\", \"target\": \"" + i + "\", \"value\": 1}");
+                    if (total!=0)bufferedWriter1.write(",");
+                    bufferedWriter1.write("\n");
+                }
+            }
+        }catch (Exception e) {
+            System.out.println("读取文件内容出错");
+            e.printStackTrace();
+        }
+        bufferedWriter1.write("]");
+        bufferedWriter1.close();
+
     }
 }
