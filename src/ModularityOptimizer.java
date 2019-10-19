@@ -20,9 +20,9 @@ public class ModularityOptimizer {
         String inputFileName, outputFileName;
 
 
-//        inputFileName = "D:/Projects/Louvain2/src/facebook_combined.txt";
-        inputFileName = "D:/Projects/Louvain2/src/testdata2.txt";
-        outputFileName = "D:/Projects/Louvain2/src/answer.txt";
+        inputFileName = "G:/JavaProjects/Louvain/src/facebook_combined.txt";
+//        inputFileName = "G:/JavaProjects/Louvain/src/testdata2.txt";
+        outputFileName = "D:/answer.txt";
         modularityFunction = 1;
         resolution = 1.0;
         algorithm = 1;
