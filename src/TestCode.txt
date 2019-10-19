@@ -1,0 +1,27 @@
+library(jsonlite)
+library('networkD3')
+MisLinks <- fromJSON("D:/links.json")
+MisNodes <- fromJSON("D:/nodes.json")
+forceNetwork(
+
+Links = MisLinks,
+Nodes = MisNodes,
+Source = "source",
+Target = "target",
+Value = "value",
+
+NodeID = "id",
+Group = "group",
+
+Nodesize = 0.1 ,
+
+fontFamily="宋体",
+fontSize = 20, 
+linkColour="black",
+#colourScale ,linkWidth,
+charge = -100,  
+opacity = 0.9,
+legend=T,
+arrows=T,
+bounded=F,
+zoom = T)
